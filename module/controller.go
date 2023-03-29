@@ -143,7 +143,7 @@ func GetTagihanFromNama_nasabah(nama_nasabah string, col string, db *mongo.Datab
 
 func GetAllTagihanFromNama_nasabah( nama_nasabah string, db *mongo.Database, col string) (tagihan []model.Tagihan) {
 	data_tagihan := db.Collection(col)
-	filter := bson.M{"biodata.nama": nama_nasabah}
+	filter := bson.M{"biodata.nama_nasabah": nama_nasabah}
 	cursor, err := data_tagihan.Find(context.TODO(), filter)
 	if err != nil {
 		fmt.Println("GetALLData :", err)
