@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	model "github.com/Fedhira/Tagihan/model"
-	module "github.com/Fedhira/Tagihan/module"
+	"github.com/Fedhira/Tagihan/module"
 )
 
 //NASABAH
@@ -15,19 +15,20 @@ func TestInsertNasabah(t *testing.T) {
 	phone_number := "62812345128342"
 	alamat := "Bekasi"
 		
-	hasil:= module.InsertNasabah(nama_nasabah, email, phone_number, alamat)
+	hasil:= module.InsertNasabah(module.MongoConn, "nasabah", nama_nasabah, email, phone_number, alamat)
 	fmt.Println(hasil)
 }
 
 func TestGetNasabahFromNama(t *testing.T) {
 	nama_nasabah := "Fedhira Syaila"
-	biodata:= module.GetNasabahFromNama(nama_nasabah)
+	biodata:= module.GetNasabahFromNama(nama_nasabah, "nasabah", module.MongoConn)
 	fmt.Println(biodata)
 }
 
-func TestGetNasabahAll(t *testing.T) {
-	biodata := module.GetNasabahAll()
-	fmt.Println(biodata)
+func TestGetAllTagihanFromNama_nasabah(t *testing.T) {
+	nama_nasabah := "Fedhira Syaila"
+	data1 := module.GetAllTagihanFromNama_nasabah(nama_nasabah, module.MongoConn, "tagihan")
+	fmt.Println(data1)
 }
 
 //PENAGIH
@@ -51,20 +52,20 @@ func TestInsertPenagih(t *testing.T) {
 		Latitude : 123.561651,
 	}
 	
-	hasil:= module.InsertPenagih(nama_penagih, email, phone_number, total_tagihan)
+	hasil:= module.InsertPenagih(module.MongoConn, "penagih", nama_penagih, email, phone_number, total_tagihan)
 	fmt.Println(hasil)
 }
 
 func TestGetPenagihFromNama(t *testing.T) {
 	nama_penagih := "Marlina"
-	biodata:= module.GetPenagihFromNama(nama_penagih)
+	biodata:= module.GetPenagihFromNama(nama_penagih,  "penagih", module.MongoConn)
 	fmt.Println(biodata)
 }
 
-func TestGetPenagihAll(t *testing.T) {
-	biodata := module.GetPenagihAll()
-	fmt.Println(biodata)
-}
+// func TestGetPenagihAll(t *testing.T) {
+// 	biodata := module.GetPenagihAll()
+// 	fmt.Println(biodata)
+// }
 
 
 //TAGIHAN
@@ -83,20 +84,20 @@ func TestInsertTagihan(t *testing.T) {
 	longitude := 98.345345
 	latitude := 123.561651
 
-	hasil:= module.InsertTagihan(total_tagihan, deskripsi, status, tanggal_jatuhtempo, biodata, location, longitude, latitude )
+	hasil:= module.InsertTagihan(module.MongoConn, "tagihan", total_tagihan, deskripsi, status, tanggal_jatuhtempo, biodata, location, longitude, latitude )
 	fmt.Println(hasil)
 }
 
 func TestGetTagihanFromNama_nasabah(t *testing.T) {
 	nama_nasabah := "Fedhira Syaila"
-	biodata:= module.GetTagihanFromNama_nasabah(nama_nasabah)
+	biodata:= module.GetTagihanFromNama_nasabah( nama_nasabah, "tagihan", module.MongoConn)
 	fmt.Println(biodata)
 }
 
-func TestGetTagihanAll(t *testing.T) {
-	biodata := module.GetTagihanAll()
-	fmt.Println(biodata)
-}
+// func TestGetTagihanAll(t *testing.T) {
+// 	biodata := module.GetTagihanAll()
+// 	fmt.Println(biodata)
+// }
 
 func TestInsertBank(t *testing.T) {
 	nama_bank := "bank abc"
@@ -229,17 +230,17 @@ func TestInsertBank(t *testing.T) {
 		},
 	}
 	
-	hasil:= module.InsertBank(nama_bank, lokasi, total_tagihan, daftar, biodata)
+	hasil:= module.InsertBank(module.MongoConn, "bank", nama_bank, lokasi, total_tagihan, daftar, biodata)
 	fmt.Println(hasil)
 }
 
 func TestGetBankFromDaftar(t *testing.T) {
 	nama_penagih := "Marlina"
-	biodata:= module.GetBankFromDaftar(nama_penagih)
+	biodata:= module.GetBankFromDaftar(nama_penagih, "bank", module.MongoConn)
 	fmt.Println(biodata)
 }
 
-func TestGetBankAll(t *testing.T) {
-	biodata := module.GetTagihanAll()
-	fmt.Println(biodata)
-}
+// func TestGetBankAll(t *testing.T) {
+// 	biodata := module.GetTagihanAll()
+// 	fmt.Println(biodata)
+// }
