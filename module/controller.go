@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 	"os"
-	
+	// "errors"
+	// "time"
     model "github.com/Fedhira/Tagihan/model"
 	"github.com/aiteung/atdb"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	// "go.mongodb.org/mongo-driver/bson/primitive"
 	// "go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -28,6 +30,37 @@ func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (inser
 	}
 	return insertResult.InsertedID
 }
+
+// GET ALL
+func GetAllTagihan(db *mongo.Database, col string) (bank model.Bank) {
+	data := db.Collection(col)
+	filter := bson.M{}
+	cursor, err := data.Find(context.TODO(), filter)
+	if err != nil {
+		fmt.Println("GetALLData :", err)
+	}
+	err = cursor.All(context.TODO(), &bank)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
+// func GetAllBank(db *mongo.Database, col string) (tagihan []model.Tagihan) {
+// 	data := db.Collection(col)
+// 	filter := bson.M{}
+// 	cursor, err := data.Find(context.TODO(), filter)
+// 	if err != nil {
+// 		fmt.Println("GetALLData :", err)
+// 	}
+// 	err = cursor.All(context.TODO(), &tagihan)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	return
+// }
+
+
 
 // NASABAH
 func InsertNasabah(db *mongo.Database, col string, nama_nasabah string, email string, phone_number string, alamat string) (InsertedID interface{}) {
